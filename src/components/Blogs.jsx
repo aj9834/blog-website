@@ -1,28 +1,31 @@
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
-import BlogDetails from "./BlogDetails";
+import React, { useContext } from 'react'
+import { AppContext } from '../context/AppContext';
+import Spiner from './Spiner';
+import Card from './Card';
 
-export default function Blogs() {
-  const { posts, loading } = useContext(AppContext);
+const Blogs = () => {
 
+  const {loading, posts} = useContext(AppContext);
+  
   return (
-    <div className=" flex flex-col gap-y-10 my-4">
-      {loading ? (
-        <div className="min-h-[80vh] w-full flex justify-center items-center">
-          <p className="text-center font-bold text-3xl">Loading</p>
-        </div>
-      ) : posts.length === 0 ? (
-        <div className="min-h-[80vh] w-full flex justify-center items-center">
-          <p className="text-center font-bold text-3xl">No Blogs Found !</p>
-        </div>
-      ) : (
-        
-        posts.map((post) => (
-          <BlogDetails key={post.id} post={post}/>
+    <div className='flex flex-col w-full max-w-[670px] mx-auto gap-10'>
+      {
+        loading ? (
+          <div className='flex h-screen items-center justify-center'>
+        {  console.log("loading is blog true", loading)}
+       
+          <Spiner/>
+          </div>
+        ) 
+        :
+        (
+          posts.map((post) => {
+            return <Card post={post} />
+          })
         )
-        
-        )
-      )}
+      }
     </div>
-  );
+  )
 }
+
+export default Blogs
